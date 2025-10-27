@@ -1,13 +1,6 @@
-import { Redo } from "lucide-react";
+import { EllipsisVertical, Redo } from "lucide-react";
 import { useState } from "react";
 import { Link, Outlet } from "react-router";
-
-// type MenuItem = {
-//   name: string;
-//   path: string;
-//   icon: LucideIcon;
-//   active: boolean;
-// };
 
 const menuAsideBar = [
   {
@@ -57,7 +50,7 @@ function PrivateLayout() {
 
         <div className="flex-1 p-2 overflow-y-auto h-72 space-y-4">
           <span className="text-sm">Home</span>
-          <div className="space-y-2">
+          <div className="space-y-1">
             {isActive.map((element) =>
               element.active ? (
                 <Link
@@ -83,8 +76,17 @@ function PrivateLayout() {
           </div>
         </div>
 
-        <footer className="h-16 bg-slate-300 flex items-center justify-center">
-          Footer
+        <footer className="h-16 p-2 border border-b-0 border-l-0 border-r-0 border-blue-6">
+          <div className="hover:cursor-default hover:bg-blue-3 p-1 rounded-md focus:border focus:border-gray-6 flex items-center justify-between">
+            <div className="flex items-center gap-x-2">
+              <div className="w-8 h-8 bg-blue-12 rounded-md"></div>
+              <div>
+                <h1 className="text-sm font-bold">Nome</h1>
+                <h2 className="text-xs">nome@gmail.com</h2>
+              </div>
+            </div>
+            <EllipsisVertical className="size-5" />
+          </div>
         </footer>
       </aside>
       <main className="flex-1 bg-gray-100 p-6 overflow-y-auto">
