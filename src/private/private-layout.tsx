@@ -1,6 +1,7 @@
 import { EllipsisVertical, Redo } from "lucide-react";
 import { useState } from "react";
 import { Link, Outlet } from "react-router";
+import { Modal } from "../components/modal";
 
 const menuAsideBar = [
   {
@@ -31,7 +32,7 @@ const menuAsideBar = [
 
 function PrivateLayout() {
   const [isActive, setIsActive] = useState(menuAsideBar);
-
+  const [showModal, setShowModal] = useState(false);
   const handleHover = (name: string) => {
     setIsActive((prev) =>
       prev.map((item) =>
@@ -41,6 +42,11 @@ function PrivateLayout() {
       )
     );
   };
+
+  const handleModal = () => {
+    setShowModal(!showModal);
+  };
+
   return (
     <div className="flex h-screen">
       <aside className="w-56 bg-blue-2 flex flex-col">
@@ -56,7 +62,7 @@ function PrivateLayout() {
                 <Link
                   to={element.path}
                   key={element.name}
-                  className="flex gap-x-3 items-center cursor-pointer bg-blue-6 p-2 duration-300"
+                  className="flex gap-x-3 items-center cursor-pointer bg-blue-3 p-2 duration-300"
                 >
                   <element.icon className="size-4" />
                   <span>{element.name}</span>
@@ -66,7 +72,7 @@ function PrivateLayout() {
                   to={element.path}
                   key={element.name}
                   onClick={() => handleHover(element.name)}
-                  className="flex gap-x-3 items-center cursor-pointer hover:bg-blue-6 p-2 duration-300"
+                  className="flex gap-x-3 items-center cursor-pointer hover:bg-blue-3 p-2 duration-300"
                 >
                   <element.icon className="size-4" />
                   <span>{element.name}</span>
@@ -76,7 +82,10 @@ function PrivateLayout() {
           </div>
         </div>
 
-        <footer className="h-16 p-2 border border-b-0 border-l-0 border-r-0 border-blue-6">
+        <footer
+          onClick={handleModal}
+          className="h-16 p-2 border border-b-0 border-l-0 border-r-0 border-blue-6"
+        >
           <div className="hover:cursor-default hover:bg-blue-3 p-1 rounded-md focus:border focus:border-gray-6 flex items-center justify-between">
             <div className="flex items-center gap-x-2">
               <div className="w-8 h-8 bg-blue-12 rounded-md"></div>
@@ -92,6 +101,11 @@ function PrivateLayout() {
       <main className="flex-1 bg-gray-100 p-6 overflow-y-auto">
         <Outlet />
       </main>
+      {showModal && (
+        <Modal>
+          <div>hello!!</div>
+        </Modal>
+      )}
     </div>
   );
 }
