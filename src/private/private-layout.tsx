@@ -98,11 +98,14 @@ function PrivateLayout() {
           </div>
         </footer>
       </aside>
-      <main className="flex-1 bg-gray-100 p-6 overflow-y-auto">
+      <main className="flex-1 bg-gray-100 overflow-y-auto">
+        <div className="h-12 p-2 text-xl font-bold border border-t-0 border-l-0 border-r-0 border-blue-6">
+          hell
+        </div>
         <Outlet />
       </main>
       {showModal && (
-        <Modal>
+        <Modal onClick={() => setShowModal(false)}>
           <div>hello!!</div>
         </Modal>
       )}
