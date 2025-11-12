@@ -21,18 +21,40 @@ const ArrayItem = [
 export function Table() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [valueRow, setValueRow] = useState(5);
-  const [ghangeItemArray, setGhangeItemArray] = useState(ArrayItem);
+  const [changeItemArray, setChangeItemArray] = useState(ArrayItem);
+  const [nextPage, setNextPage] = useState(valueRow);
+  const [previousPage, setPreviousPage] = useState(0);
 
   const handleSelect = (value: number) => {
-    setGhangeItemArray((prev) =>
+    setChangeItemArray((prev) =>
       prev.map((item) =>
         item.value === value
           ? { ...item, isSelect: true }
           : { ...item, isSelect: false }
       )
     );
-
+    setNextPage(value);
     setValueRow(value);
+  };
+
+  const handleNextPage = () => {
+    setNextPage(nextPage + valueRow);
+    setPreviousPage(previousPage + valueRow);
+  };
+
+  const handlePreviousPagePage = () => {
+    setNextPage(nextPage - valueRow);
+    setPreviousPage(previousPage - valueRow);
+  };
+
+  const handleLastPage = () => {
+    setNextPage(clients.length);
+    setPreviousPage(clients.length - valueRow);
+  };
+
+  const firstPage = () => {
+    setPreviousPage(0);
+    setNextPage(valueRow);
   };
 
   return (
@@ -51,7 +73,7 @@ export function Table() {
             <th className="border border-gray-8 border-l-0 border-r-0 border-t-0 py-2 w-3"></th>
           </tr>
           <tbody>
-            {clients.slice(0, valueRow).map((element) => (
+            {clients.slice(previousPage, nextPage).map((element) => (
               <tr
                 key={element.account_number}
                 className="border border-gray-8 border-l-0 border-r-0 hover:bg-blue-3 last:border-b-0"
@@ -86,27 +108,66 @@ export function Table() {
             </span>
           </div>
           <div className="flex justify-between w-64">
-            <span>Page 1 of 7</span>
+            <span>Page 1 of {Math.round(clients.length / valueRow)}</span>
             <div className="flex gap-x-2">
-              <span className="flex items-center bg-blue-4 border border-blue-6 hover:bg-blue-5 cursor-pointer rounded-md px-1 py-0.5">
-                <ChevronsLeft className="size-5" />
-              </span>
-              <span className="flex items-center bg-blue-4 border border-blue-6 hover:bg-blue-5 cursor-pointer rounded-md px-1 py-0.5">
-                <ChevronLeft className="size-5" />
-              </span>
-              <span className="flex items-center bg-blue-4 border border-blue-6 hover:bg-blue-5 cursor-pointer rounded-md px-1 py-0.5">
-                <ChevronRight className="size-5" />
-              </span>
-              <span className="flex items-center bg-blue-4 border border-blue-6 hover:bg-blue-5 cursor-pointer rounded-md px-1 py-0.5">
-                <ChevronsRight className="size-5" />
-              </span>
+              {previousPage == 0 ? (
+                <span className="flex items-center bg-blue-2 border border-blue-6 cursor-pointer rounded-md px-1 py-0.5">
+                  <ChevronsLeft className="size-5" />
+                </span>
+              ) : (
+                <span
+                  onClick={firstPage}
+                  className="flex items-center bg-blue-4 border border-blue-6 hover:bg-blue-5 cursor-pointer rounded-md px-1 py-0.5"
+                >
+                  <ChevronsLeft className="size-5" />
+                </span>
+              )}
+
+              {previousPage == 0 ? (
+                <span className="flex items-center bg-blue-2 border border-blue-6 cursor-pointer rounded-md px-1 py-0.5">
+                  <ChevronLeft className="size-5" />
+                </span>
+              ) : (
+                <span
+                  onClick={handlePreviousPagePage}
+                  className="flex items-center bg-blue-4 border border-blue-6 hover:bg-blue-5 cursor-pointer rounded-md px-1 py-0.5"
+                >
+                  <ChevronLeft className="size-5" />
+                </span>
+              )}
+
+              {nextPage == clients.length ? (
+                <span className="flex items-center bg-blue-2 border border-blue-6 cursor-pointer rounded-md px-1 py-0.5">
+                  <ChevronRight className="size-5" />
+                </span>
+              ) : (
+                <span
+                  onClick={handleNextPage}
+                  className="flex items-center bg-blue-4 border border-blue-6 hover:bg-blue-5 cursor-pointer rounded-md px-1 py-0.5"
+                >
+                  <ChevronRight className="size-5" />
+                </span>
+              )}
+
+              {nextPage == clients.length ? (
+                <span className="flex items-center bg-blue-2 border border-blue-6 cursor-pointer rounded-md px-1 py-0.5">
+                  <ChevronsRight className="size-5" />
+                </span>
+              ) : (
+                <span
+                  onClick={handleLastPage}
+                  className="flex items-center bg-blue-4 border border-blue-6 hover:bg-blue-5 cursor-pointer rounded-md px-1 py-0.5"
+                >
+                  <ChevronsRight className="size-5" />
+                </span>
+              )}
             </div>
           </div>
         </div>
       </div>
       {isOpenModal && (
         <Modal onClick={() => setIsOpenModal(false)}>
-          <Select ArrayItem={ghangeItemArray} handleSelect={handleSelect} />
+          <Select ArrayItem={changeItemArray} handleSelect={handleSelect} />
         </Modal>
       )}
     </>
