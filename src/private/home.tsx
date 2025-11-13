@@ -7,7 +7,7 @@ export default function Home() {
         {Array.from({ length: 4 }).map((_, index) => (
           <div
             key={index}
-            className="w-64 h-36 border border-blue-3 rounded shadow p-3 space-y-5"
+            className="w-64 h-36 border border-blue-3 bg-white rounded shadow p-3 space-y-5"
           >
             <p className="font-bold">Total of agency</p>
             <div>
@@ -18,7 +18,7 @@ export default function Home() {
       </div>
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <span className="text-xl">Client</span>
+          <span className="text-xl">Clients</span>
           <button className="bg-blue-11 hover:bg-blue-9 text-white p-6 py-2 rounded-md">
             Create account
           </button>

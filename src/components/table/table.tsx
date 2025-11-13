@@ -24,6 +24,7 @@ export function Table() {
   const [changeItemArray, setChangeItemArray] = useState(ArrayItem);
   const [nextPage, setNextPage] = useState(valueRow);
   const [previousPage, setPreviousPage] = useState(0);
+  const [page, setPage] = useState(1);
 
   const handleSelect = (value: number) => {
     setChangeItemArray((prev) =>
@@ -40,21 +41,36 @@ export function Table() {
   const handleNextPage = () => {
     setNextPage(nextPage + valueRow);
     setPreviousPage(previousPage + valueRow);
+
+    if (page <= Math.round(clients.length / valueRow)) {
+      setPage(page + 1);
+    }
   };
 
   const handlePreviousPagePage = () => {
     setNextPage(nextPage - valueRow);
     setPreviousPage(previousPage - valueRow);
+
+    if (page >= 1) {
+      setPage(page - 1);
+    }
   };
 
   const handleLastPage = () => {
     setNextPage(clients.length);
     setPreviousPage(clients.length - valueRow);
+
+    if (page <= Math.round(clients.length / valueRow)) {
+      setPage(Math.round(clients.length / valueRow));
+    }
   };
 
   const firstPage = () => {
     setPreviousPage(0);
     setNextPage(valueRow);
+    if (page >= 1) {
+      setPage(1);
+    }
   };
 
   return (
@@ -108,7 +124,9 @@ export function Table() {
             </span>
           </div>
           <div className="flex justify-between w-64">
-            <span>Page 1 of {Math.round(clients.length / valueRow)}</span>
+            <span>
+              Page {page} of {Math.round(clients.length / valueRow)}
+            </span>
             <div className="flex gap-x-2">
               {previousPage == 0 ? (
                 <span className="flex items-center bg-blue-2 border border-blue-6 cursor-pointer rounded-md px-1 py-0.5">
@@ -136,7 +154,8 @@ export function Table() {
                 </span>
               )}
 
-              {nextPage == clients.length ? (
+              {nextPage == clients.length ||
+              page == Math.round(clients.length / valueRow) ? (
                 <span className="flex items-center bg-blue-2 border border-blue-6 cursor-pointer rounded-md px-1 py-0.5">
                   <ChevronRight className="size-5" />
                 </span>
@@ -149,7 +168,8 @@ export function Table() {
                 </span>
               )}
 
-              {nextPage == clients.length ? (
+              {nextPage == clients.length ||
+              page == Math.round(clients.length / valueRow) ? (
                 <span className="flex items-center bg-blue-2 border border-blue-6 cursor-pointer rounded-md px-1 py-0.5">
                   <ChevronsRight className="size-5" />
                 </span>
