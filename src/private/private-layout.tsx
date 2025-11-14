@@ -5,6 +5,12 @@ import { Modal } from "../components/modal";
 
 const menuAsideBar = [
   {
+    name: "Home",
+    path: "home",
+    icon: Redo,
+    active: false,
+  },
+  {
     name: "Transfer",
     path: "transfer",
     icon: Redo,
@@ -99,11 +105,8 @@ function PrivateLayout() {
         </footer>
       </aside>
       <main className="flex-1 bg-gray-100 overflow-y-auto pb-10">
-        <div className="h-12 p-2 text-xl font-bold border border-t-0 border-l-0 border-r-0 border-blue-6">
-          hell
-        </div>
+        <div className="text-gray-9 py-3 px-6">painel/home</div>
         <div className="p-6 py-3 space-y-10">
-          <div className="text-gray-9">painel/home</div>
           <Outlet />
         </div>
       </main>
