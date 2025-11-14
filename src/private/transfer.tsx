@@ -44,7 +44,7 @@ export default function Transfer() {
         </form>
       </div>
       {isOpen && (
-        <Modal className="" onClick={() => setIsOpen(false)}>
+        <Modal onClick={() => setIsOpen(false)}>
           <div>hello</div>
         </Modal>
       )}
