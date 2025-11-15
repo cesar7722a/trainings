@@ -85,7 +85,10 @@ export function Table() {
             <th className="py-2 border border-gray-8 border-t-0 border-b-0">
               Account type
             </th>
-            <th className="py-2">Account number</th>
+            <th className="py-2 border border-gray-8 border-t-0 border-l-0 border-b-0">
+              Account number
+            </th>
+            <th className="py-2">balance kz</th>
             <th className="border border-gray-8 border-l-0 border-r-0 border-t-0 py-2 w-3"></th>
           </tr>
           <tbody>
@@ -101,7 +104,10 @@ export function Table() {
                 <td className="border border-gray-8 border-t-0 border-b-0 py-2 px-2">
                   {element.account_type}
                 </td>
-                <td className="px-2">{element.account_number}</td>
+                <td className="px-2 border border-gray-8 border-t-0 border-l-0 border-b-0">
+                  {element.account_number}
+                </td>
+                <td className="px-2">{element.balance}</td>
                 <td className="border border-gray-8 border-l-0 border-r-0 border-b-0 py-2 px-2 w-3 hover:cursor-pointer">
                   <EllipsisVertical className="size-4" />
                 </td>
