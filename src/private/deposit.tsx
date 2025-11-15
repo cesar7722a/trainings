@@ -13,15 +13,15 @@ type FormData = {
 
 export default function Transfer() {
   const [isOpen, setIsOpen] = useState(false);
-  const [dataUserTransfer, setDataUserTransfer] = useState<Client>();
+  const [dataUserDeposit, setDataUserDeposit] = useState<Client>();
   const { control, handleSubmit } = useForm<FormData>();
   const [amount, setAmount] = useState<number>();
   const onSubmit = (data: FormData) => {
-    const transferUser = clients.find(
+    const depositUser = clients.find(
       (user) => user.account_number == data.number_account
     );
 
-    setDataUserTransfer(transferUser);
+    setDataUserDeposit(depositUser);
     setAmount(data.Amount_deposit);
   };
   return (
@@ -76,11 +76,11 @@ export default function Transfer() {
               <div>
                 <strong>Deposit in:</strong>
                 <p>
-                  name: <strong>{dataUserTransfer?.name}</strong>
+                  name: <strong>{dataUserDeposit?.name}</strong>
                 </p>
                 <p>
                   number account:
-                  <strong>{dataUserTransfer?.account_number}</strong>
+                  <strong>{dataUserDeposit?.account_number}</strong>
                 </p>
                 <p>
                   Amount: <strong>{amount} kz</strong>

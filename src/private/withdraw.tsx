@@ -1,3 +1,113 @@
-export default function Withdraw() {
-  return <div>hello withdraw!!</div>;
+import { useState } from "react";
+import { Heading } from "../components/heading";
+import { Input } from "../components/input";
+import { Modal } from "../components/modal";
+import { useForm } from "react-hook-form";
+import { clients } from "../type-data/data-user";
+import type { Client } from "../type-data/type/clients-type";
+
+type FormData = {
+  number_account: string;
+  Amount_withdraw: number;
+  client_bi: string;
+};
+
+export default function Transfer() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [dataUserWithdraw, setDataUserWithdraw] = useState<Client>();
+  const { control, handleSubmit } = useForm<FormData>();
+  const [amount, setAmount] = useState<number>();
+
+  const onSubmit = (data: FormData) => {
+    const withdrawUser = clients.find(
+      (user) => user.account_number == data.number_account
+    );
+
+    setDataUserWithdraw(withdrawUser);
+    setAmount(data.Amount_withdraw);
+  };
+  return (
+    <div className="space-y-10">
+      <div>
+        <Heading>Withdraw</Heading>
+        <h2>Fill in the form to make withdraw</h2>
+      </div>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="bg-white max-w-4xl mx-auto rounded-md px-6 pt-6 pb-8 space-y-4 shadow-md"
+      >
+        <div className="space-y-2">
+          <p className="text-xl">Enter the starting account details.</p>
+          <div className="flex gap-x-10">
+            <Input
+              label="Number of account"
+              control={control}
+              name="number_account"
+            />
+            <Input
+              label="Amount to be withdraw"
+              type="number"
+              control={control}
+              name="Amount_withdraw"
+            />
+          </div>
+        </div>
+        <div className="space-y-2">
+          <div className="flex gap-x-10">
+            <Input label="BI client" control={control} name="client_bi" />
+          </div>
+        </div>
+        <div className="pt-10">
+          <button
+            onClick={() => setIsOpen(true)}
+            type="submit"
+            className="h-10 w-full border rounded-md bg-blue-9 hover:bg-blue-10 text-blue-contrast"
+          >
+            Confirmar
+          </button>
+        </div>
+        {isOpen && (
+          <Modal
+            className="flex justify-center items-center"
+            onClick={() => setIsOpen(false)}
+          >
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              className="w-[520px] bg-white border-blue-4 border rounded-md shadow-md p-3 py-4 space-y-6"
+            >
+              <h2 className="text-center text-2xl font-semibold">
+                confirm withdraw
+              </h2>
+              <div>
+                <strong>withdraw of:</strong>
+                <p>
+                  name: <strong>{dataUserWithdraw?.name}</strong>
+                </p>
+                <p>
+                  number account:
+                  <strong>{dataUserWithdraw?.account_number}</strong>
+                </p>
+                <p>
+                  Amount: <strong>{amount} kz</strong>
+                </p>
+              </div>
+              <div className="flex justify-end gap-x-4">
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="border border-blue-9 px-6 rounded-md hover:bg-blue-2"
+                >
+                  Cancel
+                </button>
+                <button className="h-10 px-6 border rounded-md bg-blue-9 hover:bg-blue-10 text-blue-contrast">
+                  confirm
+                </button>
+              </div>
+            </div>
+          </Modal>
+        )}
+      </form>
+    </div>
+  );
 }
