@@ -92,10 +92,7 @@ export function Input<T extends FieldValues>({
   return (
     <div className="flex flex-col w-96 space-y-1">
       {label && (
-        <Label
-          className={cn("text-sm font-medium", className)}
-          htmlFor={inputId}
-        >
+        <Label className={cn("text-sm font-medium")} htmlFor={inputId}>
           {label}
         </Label>
       )}

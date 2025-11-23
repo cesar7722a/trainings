@@ -1,6 +1,10 @@
+import { useState } from "react";
+import { Modal } from "../components/modal";
 import { Table } from "../components/table/table";
+import { CreateClient } from "./form-create-client";
 
 export default function Home() {
+  const [isOpenModal, setIsOpenModal] = useState(false);
   return (
     <div className="space-y-10">
       <div className="flex justify-between gap-x-4">
@@ -18,13 +22,24 @@ export default function Home() {
       </div>
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <span className="text-xl">Clients</span>
-          <button className="bg-blue-11 hover:bg-blue-9 text-white p-6 py-2 rounded-md">
+          <span className="text-4xl font-bold">Clients</span>
+          <button
+            onClick={() => setIsOpenModal(true)}
+            className="bg-blue-11 hover:bg-blue-9 text-white p-6 py-2 rounded-md"
+          >
             Create account
           </button>
         </div>
         <Table />
       </div>
+      {isOpenModal && (
+        <Modal
+          className="flex justify-center items-center"
+          onClick={() => setIsOpenModal(false)}
+        >
+          <CreateClient onClick={() => setIsOpenModal(false)} />
+        </Modal>
+      )}
     </div>
   );
 }
